@@ -2,9 +2,22 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/indexService', function () {
+    return view('services');
+});
+
+Route::get('/indexProgram', function () {
+    return view('program');
 });
 
 Route::get('/dashboard', function () {
@@ -18,3 +31,13 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('admin/employee', EmployeeController::class);
+    Route::resource('admin/family', FamilyController::class);
+    Route::resource('admin/service', ServiceController::class);
+    Route::resource('admin/post', PostController::class);
+});
+
