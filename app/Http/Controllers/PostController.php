@@ -21,7 +21,7 @@ class PostController extends Controller
         return view('admin.post.index', compact('posts'))
             ->with('i', ($request->input('page', 1) - 1) * $posts->perPage());
 
-        // Obtener los últimos posts publicados
+
         $posts = Post::orderBy('published_at', 'desc')->take(5)->get();
     }
 

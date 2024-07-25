@@ -22,9 +22,6 @@
                         <li class="nav-item">
                             <a class="nav-link btn btn-success mx-1 text-light" href="{{ route('post.index') }}">{{ __('Avisos') }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-success mx-1 text-light" href="{{ route('register') }}">{{ __('Registro') }}</a>
-                        </li>
                     </ul>
                 </div>
             </div>

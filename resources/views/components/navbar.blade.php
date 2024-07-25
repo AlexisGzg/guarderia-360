@@ -6,49 +6,43 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link mx-5 text-dark" href="/">
-                        Inicio
-                    </a>
+                    <a class="nav-link mx-5 text-light" href="/">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-5 text-dark" href="/indexService">
-                        Servicios
-                    </a>
+                    <a class="nav-link mx-5 text-light" href="/indexService">Servicios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-5 text-dark" href="/indexProgram">
-                        Nuestro programa
-                    </a>
+                    <a class="nav-link mx-5 text-light" href="/indexProgram">Nuestro programa</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/preRegister" class="nav-link mx-5 text-light">Pre-registro</a>
                 </li>
             </ul>
             <div class="d-flex">
                 <ul class="navbar-nav">
-                    @if (Route::has('login'))
-                    @auth
                     <li class="nav-item">
+                        @if (Route::has('login'))
+                        @auth
                         @if (Auth::user()->usertype == 'admin')
-                        <a href="{{ url('admin/dashboard') }}" class="nav-link btn btn-success text-white" type="button">
+                        <a href="{{ url('admin/dashboard') }}" class="btn btn-success btn-sm ms-2" type="button">
                             Perfil Administrador
                         </a>
                         @else
-                        <a href="{{ url('/dashboard') }}" class="nav-link btn btn-success text-white" type="button">
+                        <a href="{{ url('/dashboard') }}" class="btn btn-success btn-sm ms-2" type="button">
                             Perfil
                         </a>
                         @endif
-                    </li>
-                    @else
-                    <li class="nav-item">
-                        <a href="{{ route('login') }}" class="nav-link btn btn-success text-white" type="button">
+                        @else
+                        <a href="{{ route('login') }}" class="btn btn-success btn-sm ms-2" type="button">
                             Iniciar Sesión
                         </a>
+                        @endauth
+                        @endif
                     </li>
-                    @endauth
-                    @endif
                 </ul>
             </div>
-
         </div>
     </div>
 </nav>

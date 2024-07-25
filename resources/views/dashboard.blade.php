@@ -30,11 +30,11 @@ $posts = Post::orderBy('published_at', 'desc')->take(5)->get();
                     @foreach ($posts as $post)
                     <div class="card-body bg-white">
                         <div class="alert bg-success-subtle text-dark">
-                            <strong>Title:</strong>
+                            <strong>Titulo:</strong>
                             {{ $post->title }}
                         </div>
                         <div class="alert bg-success-subtle text-dark">
-                            <strong>Content:</strong>
+                            <strong>Contenido:</strong>
                             {{ $post->content }}
                         </div>
                         <div class="alert bg-success-subtle text-dark">

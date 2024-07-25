@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.dashboard')
 
 @section('template_title')
 {{ $post->name ?? __('Show') . " " . __('Post') }}
@@ -11,10 +11,10 @@
             <div class="card">
                 <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                     <div class="float-left">
-                        <span class="card-title">{{ __('Mostrar') }} Post</span>
+                        <span class="card-title">{{ __('Mostrar') }} Post {{ $post->id }}</span>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-success btn-sm" href="{{ route('posts.index') }}"> {{ __('Regresar') }}</a>
+                        <a class="btn btn-success btn-sm" href="{{ route('post.index') }}"> {{ __('Regresar') }}</a>
                     </div>
                 </div>
 

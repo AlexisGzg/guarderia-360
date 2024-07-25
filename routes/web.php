@@ -20,6 +20,10 @@ Route::get('/indexProgram', function () {
     return view('program');
 });
 
+Route::get('/preRegister', function () {
+    return view('preregister');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
