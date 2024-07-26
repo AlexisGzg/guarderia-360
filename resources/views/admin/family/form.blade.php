@@ -97,8 +97,8 @@
             @endforeach
         </div>
 
-        <button type="button" class="btn btn-success mt-2" id="add-child">Añadir Infante</button>
-        <button type="submit" class="btn btn-primary mt-2">{{ isset($tutor->id) ? 'Actualizar' : 'Guardar' }}</button>
+        <button type="button" class="btn btn-warning mt-2" id="add-child">Añadir Infante</button>
+        <button type="submit" class="btn btn-success mt-2 mx-3">{{ isset($tutor->id) ? 'Actualizar' : 'Enviar' }}</button>
     </form>
 </div>
 

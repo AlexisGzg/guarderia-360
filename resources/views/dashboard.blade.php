@@ -10,7 +10,7 @@ $posts = Post::orderBy('published_at')->take(5)->get();
         <nav class="navbar navbar-expand-lg navbar-light bg-success">
             <div class="container-fluid">
                 <h2 class="text-success-subtle bg-success text-center py-1">
-                    {{ __('Usuario: ') }}{{ Auth::user()->name }}
+                    {{ __('Bienvenido: ') }}{{ Auth::user()->name }}
                 </h2>
             </div>
         </nav>
