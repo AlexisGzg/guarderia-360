@@ -44,7 +44,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($employees as $employee)
+                                    @forelse ($employees as $employee)
                                         <tr>
                                             <td>{{ $employee->id }}</td>
                                             <td>{{ $employee->name }}</td>
@@ -63,7 +63,11 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">No hay personal registrados</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

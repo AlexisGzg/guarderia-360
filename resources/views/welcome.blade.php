@@ -16,8 +16,8 @@
 
     <style>
         .carousel-item img {
-            width: 100%; /* Asegura que la imagen ocupe todo el contenedor */
-            height: auto; /* Mantiene la relación de aspecto */
+            width: 80%;
+            height: auto;
         }
     </style>
 </head>

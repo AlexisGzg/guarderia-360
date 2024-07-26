@@ -32,10 +32,35 @@
         <div class="row">
             <div class="col-sm-8">
                 <div class="bg-light rounded shadow-sm p-4 mb-5">
-                    <h4>Bienvenido al Panel de Tablas!</h4>
+                    @if (View::hasSection('content'))
                     @yield('content')
+                    @else
+                    <h4>Bienvenido al Panel de Tablas!</h4>
+                    <p class="text-lg mb-4">Aquí encontrarás una visión general de las tablas y datos importantes que gestionamos. Este panel te ofrece una rápida visión de las secciones clave y los datos relevantes para la administración de nuestra aplicación.</p>
+
+                    <div class="alert alert-info mb-4">
+                        <h5 class="alert-heading">Últimos Registros</h5>
+                        <p>Consulta los registros más recientes para tener una visión rápida de las últimas actividades realizadas en el sistema. Mantente al tanto de los cambios y actualizaciones recientes para una gestión eficiente.</p>
+                    </div>
+
+                    <div class="bg-light rounded shadow-sm p-3 mb-4">
+                        <h5 class="mb-3">Resumen Estadístico</h5>
+                        <p class="mb-1">Accede a un resumen detallado de las estadísticas y métricas más importantes relacionadas con los datos de nuestra aplicación. Esto te ayudará a comprender mejor el estado actual y el rendimiento general.</p>
+                    </div>
+
+                    <div class="alert alert-warning mb-4">
+                        <h5 class="alert-heading">Alertas y Notificaciones</h5>
+                        <p>Revisa las alertas y notificaciones importantes para estar al tanto de eventos recientes que requieren atención. Las alertas te ayudarán a identificar y gestionar problemas o actualizaciones importantes rápidamente.</p>
+                    </div>
+
+                    <div class="bg-light rounded shadow-sm p-3 mb-4">
+                        <h5 class="mb-3">Últimas Noticias</h5>
+                        <p class="mb-1">Mantente informado con las últimas noticias y actualizaciones relevantes para nuestra aplicación. Las noticias te brindarán información sobre nuevas características, mejoras y otros anuncios importantes.</p>
+                    </div>
+                    @endif
                 </div>
             </div>
+
 
             <div class="col-sm-4">
                 <div class="bg-light rounded shadow-sm p-4 mb-5">

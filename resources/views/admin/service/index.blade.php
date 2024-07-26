@@ -11,16 +11,14 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-
                             <span id="card_title">
                                 {{ __('Servicios') }}
                             </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('service.create') }}" class="btn btn-success btn-sm float-right"  data-placement="left">
-                                  {{ __('Agregar') }}
+                            <div class="float-right">
+                                <a href="{{ route('service.create') }}" class="btn btn-success btn-sm float-right" data-placement="left">
+                                    {{ __('Agregar') }}
                                 </a>
-                              </div>
+                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -35,34 +33,30 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>ID</th>
-                                        
-									<th >Nombre</th>
-                                    <th >Descripción</th>
-									<th >Precio</th>
-									<th >Estado</th>
-									<th >Foto</th>
-
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Precio</th>
+                                        <th>Estado</th>
+                                        <th>Foto</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($services as $service)
+                                    @forelse ($services as $service)
                                         <tr>
                                             <td>{{ $service->id }}</td>
-                                            
-										<td >{{ $service->name }}</td>
-										<td >{{ $service->description }}</td>
-										<td >${{ $service->price }}</td>
-										<td >{{ $service->status }}</td>
-                                            <td >
+                                            <td>{{ $service->name }}</td>
+                                            <td>{{ $service->description }}</td>
+                                            <td>${{ $service->price }}</td>
+                                            <td>{{ $service->status }}</td>
+                                            <td>
                                                 <a href="{{ asset($service->photo) }}" target="_blank">
                                                     <img src="{{ asset($service->photo) }}" width="100" height="auto" alt="arte">
                                                 </a>
                                             </td>
-
                                             <td>
                                                 <form action="{{ route('service.destroy', $service->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('service.show', $service->id) }}"><i class="bi bi-eye"></i></a>
+                                                    <a class="btn btn-sm btn-primary" href="{{ route('service.show', $service->id) }}"><i class="bi bi-eye"></i></a>
                                                     <a class="btn btn-sm btn-warning" href="{{ route('service.edit', $service->id) }}"><i class="bi bi-pencil"></i></a>
                                                     @csrf
                                                     @method('DELETE')
@@ -70,7 +64,11 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center">No hay servicios registrados</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
