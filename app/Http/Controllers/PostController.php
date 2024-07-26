@@ -43,7 +43,7 @@ class PostController extends Controller
         Post::create($request->validated());
 
         return Redirect::route('post.index')
-            ->with('success', 'Post created successfully.');
+            ->with('success', 'Se creo el post exitosamente.');
     }
 
     /**
@@ -74,7 +74,7 @@ class PostController extends Controller
         $post->update($request->validated());
 
         return Redirect::route('post.index')
-            ->with('success', 'Post updated successfully');
+            ->with('success', 'Se actualizo el post exitosamente.');
     }
 
     public function destroy($id): RedirectResponse
@@ -82,6 +82,6 @@ class PostController extends Controller
         Post::find($id)->delete();
 
         return Redirect::route('post.index')
-            ->with('success', 'Post deleted successfully');
+            ->with('success', 'Se elimino el post exitosamente.');
     }
 }

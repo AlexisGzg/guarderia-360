@@ -2,7 +2,7 @@
 
 use App\Models\Post;
 
-$posts = Post::orderBy('published_at', 'desc')->take(5)->get();
+$posts = Post::orderBy('published_at')->take(5)->get();
 ?>
 
 <x-app-layout>
@@ -24,11 +24,11 @@ $posts = Post::orderBy('published_at', 'desc')->take(5)->get();
                 <p>{{ Auth::user()->name }}</p>
             </div>
 
-            <div class="p-6 text-gray-900">
+            <div class="container mx-auto text-gray-900">
                 <h4>Últimos Avisos:</h4>
                 <ul>
                     @foreach ($posts as $post)
-                    <div class="card-body bg-white">
+                    <div class="card-body">
                         <div class="alert bg-success-subtle text-dark">
                             <strong>Titulo:</strong>
                             {{ $post->title }}
@@ -40,6 +40,10 @@ $posts = Post::orderBy('published_at', 'desc')->take(5)->get();
                         <div class="alert bg-success-subtle text-dark">
                             <strong>Publicado el:</strong>
                             {{ $post->created_at }}
+                        </div>
+                        <div class="alert bg-success-subtle text-dark">
+                            <strong>Ultima actualización:</strong>
+                            {{ $post-> updated_at}}
                         </div>
                     </div>
                     <hr>

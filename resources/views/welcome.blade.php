@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Guarderia Joseph Lancaster</title>
+    <title>Guardería Joseph Lancaster</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -13,6 +13,13 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/lumen/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        .carousel-item img {
+            width: 100%; /* Asegura que la imagen ocupe todo el contenedor */
+            height: auto; /* Mantiene la relación de aspecto */
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
@@ -28,24 +35,24 @@
                     <div class="container text-success-emphasis">
                         <div class="alert alert-dismissible alert-success text-success-emphasis">
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            <strong class="">Bienvenido!</strong> No olvides revisan la seccion de servicios y cotizar con nostros. <a href="/indexService" class="alert-link">Ver todos los servicios</a>.
+                            <strong class="">¡Bienvenido!</strong> No olvides revisar la sección de servicios y cotizar con nosotros. <a href="/indexService" class="alert-link">Ver todos los servicios</a>.
                         </div>
                     </div>
 
-                    <!-- Inicio de la seccion 1 -->
+                    <!-- Inicio de la sección 1 -->
                     <div class="container text-center">
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-12 col-md-8">
                                 <div id="carouselExample" class="carousel slide">
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
-                                            <img src="{{ asset('images/banner1.jpg')}}" class="border border-5 w-50" alt="...">
+                                            <img src="{{ asset('images/banner1.jpg')}}" class="d-block w-100" alt="...">
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="{{ asset('images/banner2.jpg')}}" class="border border-5 w-75" alt="...">
+                                            <img src="{{ asset('images/banner2.jpg')}}" class="d-block w-100" alt="...">
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="{{ asset('images/banner3.jpg')}}" class="border border-5 w-75" alt="...">
+                                            <img src="{{ asset('images/banner3.jpg')}}" class="d-block w-100" alt="...">
                                         </div>
                                     </div>
                                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -58,7 +65,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-12 col-md-4">
                                 <div class="card text-success-emphasis bg-success mx-3 my-4">
                                     <div class="card-header">
                                         <h4 class="p-1">
@@ -69,7 +76,7 @@
                                     <div class="container text-center">
                                         <div class="card-body">
                                             <h5 class="card-title">El mejor espacio para tu pequeño</h5>
-                                            <p class="card-text">En Guarderías Gigi trabajamos para que nuestros bebes, niños y niñas se desarrollen física y emocionalmente en un ambiente seguro, sano, afectivo y divertido.</p>
+                                            <p class="card-text">En Guarderías Gigi trabajamos para que nuestros bebés, niños y niñas se desarrollen física y emocionalmente en un ambiente seguro, sano, afectivo y divertido.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -78,11 +85,11 @@
 
                         <hr class="my-5">
 
-                        <!-- Inicio de la seccion 2 -->
+                        <!-- Inicio de la sección 2 -->
                         <div class="container text-center mt-5">
                             <div class="row">
-                                <div class="col">
-                                    <div class="card border-success mb-3 w-5 h-5">
+                                <div class="col-12 col-md-4">
+                                    <div class="card border-success mb-3 w-100">
                                         <img src="{{ asset('images/img.jpg')}}" class="mx-auto w-100" alt="...">
                                         <div class="card-header">SUS PRIMEROS PASOS</div>
                                         <div class="card-body">
@@ -90,8 +97,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="card border-success mb-3 w-5 h-5">
+                                <div class="col-12 col-md-4">
+                                    <div class="card border-success mb-3 w-100">
                                         <img src="{{ asset('images/social.jpg')}}" class="mx-auto w-100" alt="...">
                                         <div class="card-header">SU PREPARACIÓN</div>
                                         <div class="card-body">
@@ -99,8 +106,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="card border-success mb-3 w-5 h-5">
+                                <div class="col-12 col-md-4">
+                                    <div class="card border-success mb-3 w-100">
                                         <img src="{{ asset('images/danza.jpg')}}" class="mx-auto w-100" alt="...">
                                         <div class="card-header">SU CRECIMIENTO</div>
                                         <div class="card-body">

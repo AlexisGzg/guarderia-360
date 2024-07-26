@@ -19,7 +19,7 @@ class FamilyController extends Controller
     public function index(Request $request): View
     {
         $tutors = Tutor::paginate();
-        $children = Child::paginate(); // Cambiar de Children a Child
+        $children = Child::paginate();
 
         return view('admin.family.index', compact('tutors', 'children'))
             ->with('i', ($request->input('page', 1) - 1) * $tutors->perPage());
@@ -31,7 +31,7 @@ class FamilyController extends Controller
     public function create(): View
     {
         $tutor = new Tutor();
-        $children = [new Child()]; // Cambiar de Children a Child
+        $children = [new Child()];
 
         return view('admin.family.create', compact('tutor', 'children'));
     }
@@ -46,13 +46,12 @@ class FamilyController extends Controller
         DB::beginTransaction();
 
         try {
-            // Guardar la foto del tutor
+            // Crear tutor
             if ($request->hasFile('photo')) {
                 $tutorPhotoPath = $request->file('photo')->store('public/photos');
                 $tutorPhotoUrl = Storage::url($tutorPhotoPath);
             }
 
-            // Crear tutor
             $tutor = Tutor::create([
                 'name' => $validated['name'],
                 'middlename' => $validated['middlename'],
@@ -61,9 +60,8 @@ class FamilyController extends Controller
                 'photo' => $tutorPhotoUrl ?? null,
             ]);
 
-            // Crear infantes
+            //Manejo de multiples infantes
             foreach ($validated['children'] as $childData) {
-                // Guardar la foto del infante
                 if (isset($childData['photo']) && $childData['photo']) {
                     $childPhotoPath = $childData['photo']->store('public/photos');
                     $childPhotoUrl = Storage::url($childPhotoPath);
@@ -145,7 +143,7 @@ class FamilyController extends Controller
                 'photo' => $tutor->photo,
             ]);
 
-            // Procesar hijos existentes y nuevos
+            // Manejo de infantes existentes y nuevos
             $existingChildIds = $tutor->children->pluck('id')->toArray();
             $submittedChildIds = [];
 
