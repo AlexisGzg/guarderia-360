@@ -1,7 +1,7 @@
 @extends('admin.dashboard')
 
 @section('template_title')
-{{ __('Detalles de Tutor y Sus Hijos') }}
+    {{ __('Detalles de Tutor y Sus Hijos') }}
 @endsection
 
 @section('content')
@@ -48,8 +48,8 @@
                         </div>
                         <div class="col-md-6">
                             <h5 class="card-title">{{ __('Hijos') }}</h5>
-                            @if ($tutor->children)
-                                @foreach ($tutor->children as $child)
+                            @if ($children->count())
+                                @foreach ($children as $child)
                                     <div class="alert bg-success-subtle text-dark">
                                         <strong>Nombre:</strong>
                                         {{ $child->name }}
@@ -87,6 +87,13 @@
                                         {{ $child->description }}
                                     </div>
                                 @endforeach
+                                
+                                <!-- Paginación -->
+                                <div class="mt-4">
+                                    {{ $children->links() }}
+                                </div>
+                            @else
+                                <p>No hay hijos registrados para este tutor.</p>
                             @endif
                         </div>
                     </div>

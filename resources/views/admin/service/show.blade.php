@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.dashboard')
 
 @section('template_title')
     {{ $service->name ?? __('Show') . " " . __('Service') }}
@@ -14,7 +14,7 @@
                             <span class="card-title">{{ __('Show') }} Service</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('services.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('service.index') }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 

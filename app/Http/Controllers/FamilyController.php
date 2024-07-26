@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tutor;
-use App\Models\Children;
+use App\Models\Child; // Cambiar de Children a Child
 use App\Http\Requests\FamilyRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -19,9 +19,9 @@ class FamilyController extends Controller
     public function index(Request $request): View
     {
         $tutors = Tutor::paginate();
-        $childrens = Children::paginate();
+        $children = Child::paginate(); // Cambiar de Children a Child
 
-        return view('admin.family.index', compact('tutors', 'childrens'))
+        return view('admin.family.index', compact('tutors', 'children'))
             ->with('i', ($request->input('page', 1) - 1) * $tutors->perPage());
     }
 
@@ -31,7 +31,7 @@ class FamilyController extends Controller
     public function create(): View
     {
         $tutor = new Tutor();
-        $children = new Children();
+        $children = [new Child()]; // Cambiar de Children a Child
 
         return view('admin.family.create', compact('tutor', 'children'));
     }
@@ -61,25 +61,27 @@ class FamilyController extends Controller
                 'photo' => $tutorPhotoUrl ?? null,
             ]);
 
-            // Guardar la foto del infante
-            if ($request->hasFile('child_photo')) {
-                $childPhotoPath = $request->file('child_photo')->store('public/photos');
-                $childPhotoUrl = Storage::url($childPhotoPath);
-            }
+            // Crear infantes
+            foreach ($validated['children'] as $childData) {
+                // Guardar la foto del infante
+                if (isset($childData['photo']) && $childData['photo']) {
+                    $childPhotoPath = $childData['photo']->store('public/photos');
+                    $childPhotoUrl = Storage::url($childPhotoPath);
+                }
 
-            // Crear infante
-            Children::create([
-                'tutor_id' => $tutor->id,
-                'name' => $validated['name'],
-                'middlename' => $validated['middlename'],
-                'lastname' => $validated['lastname'],
-                'birthdate' => $validated['birthdate'],
-                'photo' => $childPhotoUrl ?? null,
-                'gender' => $validated['gender'],
-                'height' => $validated['height'],
-                'weight' => $validated['weight'],
-                'description' => $validated['description'] ?? null,
-            ]);
+                Child::create([
+                    'tutor_id' => $tutor->id,
+                    'name' => $childData['name'],
+                    'middlename' => $childData['middlename'],
+                    'lastname' => $childData['lastname'],
+                    'birthdate' => $childData['birthdate'],
+                    'photo' => $childPhotoUrl ?? null,
+                    'gender' => $childData['gender'],
+                    'height' => $childData['height'],
+                    'weight' => $childData['weight'],
+                    'description' => $childData['description'] ?? null,
+                ]);
+            }
 
             DB::commit();
 
@@ -93,13 +95,14 @@ class FamilyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($id)
     {
-        $tutor = Tutor::findOrFail($id);
-        $children = Children::where('tutor_id', $id)->paginate();
+        $tutor = Tutor::with('children')->findOrFail($id);
+        $children = $tutor->children()->paginate(1);
 
         return view('admin.family.show', compact('tutor', 'children'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -107,7 +110,7 @@ class FamilyController extends Controller
     public function edit($id): View
     {
         $tutor = Tutor::findOrFail($id);
-        $children = Children::where('tutor_id', $id)->get();
+        $children = Child::where('tutor_id', $id)->get();
 
         return view('admin.family.edit', compact('tutor', 'children'));
     }
@@ -122,11 +125,13 @@ class FamilyController extends Controller
         DB::beginTransaction();
 
         try {
-            // Actualizar tutor
             $tutor = Tutor::findOrFail($id);
 
             // Guardar nueva foto del tutor si se ha subido
             if ($request->hasFile('photo')) {
+                if ($tutor->photo) {
+                    Storage::delete(str_replace('/storage', 'public', $tutor->photo));
+                }
                 $tutorPhotoPath = $request->file('photo')->store('public/photos');
                 $tutorPhotoUrl = Storage::url($tutorPhotoPath);
                 $tutor->photo = $tutorPhotoUrl;
@@ -141,13 +146,19 @@ class FamilyController extends Controller
             ]);
 
             // Procesar hijos existentes y nuevos
+            $existingChildIds = $tutor->children->pluck('id')->toArray();
+            $submittedChildIds = [];
+
             foreach ($validated['children'] as $childData) {
                 if (isset($childData['id'])) {
-                    $child = Children::findOrFail($childData['id']);
+                    $submittedChildIds[] = $childData['id'];
+                    $child = Child::findOrFail($childData['id']);
 
-                    // Guardar nueva foto del infante si se ha subido
-                    if ($request->hasFile('child_photo')) {
-                        $childPhotoPath = $request->file('child_photo')->store('public/photos');
+                    if (isset($childData['photo']) && $childData['photo']) {
+                        if ($child->photo) {
+                            Storage::delete(str_replace('/storage', 'public', $child->photo));
+                        }
+                        $childPhotoPath = $childData['photo']->store('public/photos');
                         $childPhotoUrl = Storage::url($childPhotoPath);
                         $child->photo = $childPhotoUrl;
                     }
@@ -165,28 +176,32 @@ class FamilyController extends Controller
                     ]);
                 } else {
                     // Crear nuevo niño asociado al tutor
-                    $newChild = new Children([
+                    $newChild = new Child([
                         'tutor_id' => $tutor->id,
                         'name' => $childData['name'],
                         'middlename' => $childData['middlename'],
                         'lastname' => $childData['lastname'],
                         'birthdate' => $childData['birthdate'],
-                        'photo' => $childPhotoUrl ?? null,
+                        'photo' => $childData['photo'] ?? null,
                         'gender' => $childData['gender'],
                         'height' => $childData['height'],
                         'weight' => $childData['weight'],
                         'description' => $childData['description'] ?? null,
                     ]);
 
-                    // Guardar nueva foto del infante si se ha subido
-                    if ($request->hasFile('child_photo')) {
-                        $childPhotoPath = $request->file('child_photo')->store('public/photos');
+                    if (isset($childData['photo']) && $childData['photo']) {
+                        $childPhotoPath = $childData['photo']->store('public/photos');
                         $childPhotoUrl = Storage::url($childPhotoPath);
                         $newChild->photo = $childPhotoUrl;
                     }
 
                     $newChild->save();
                 }
+            }
+
+            $childrenToDelete = array_diff($existingChildIds, $submittedChildIds);
+            if ($childrenToDelete) {
+                Child::whereIn('id', $childrenToDelete)->delete();
             }
 
             DB::commit();
@@ -198,6 +213,7 @@ class FamilyController extends Controller
         }
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -206,7 +222,7 @@ class FamilyController extends Controller
         $tutor = Tutor::findOrFail($id);
         $tutor->delete();
 
-        Children::where('tutor_id', $id)->delete();
+        Child::where('tutor_id', $id)->delete();
 
         return redirect()->route('family.index')
             ->with('success', 'Registro eliminado exitosamente.');

@@ -19,6 +19,6 @@ class Tutor extends Model
 
     public function children()
     {
-        return $this->hasMany(Children::class);
+        return $this->hasMany(Child::class);
     }
 }

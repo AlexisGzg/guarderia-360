@@ -11,18 +11,17 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-
                             <span id="card_title">
                                 {{ __('Infantes y Tutores') }}
                             </span>
-
                              <div class="float-right">
-                                <a href="{{ route('family.create') }}" class="btn btn-success btn-sm float-right" data-placement="left">
+                                <a href="{{ route('family.create') }}" class="btn btn-success btn-sm" data-placement="left">
                                   {{ __('Agregar') }}
                                 </a>
-                              </div>
+                            </div>
                         </div>
                     </div>
+
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success m-4">
                             <p>{{ $message }}</p>
@@ -45,19 +44,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tutors as $tutor)
+                                    @forelse ($tutors as $tutor)
                                         <tr>
                                             <td>{{ $tutor->id }}</td>
                                             <td>{{ $tutor->name }}</td>
                                             <td>{{ $tutor->middlename }}</td>
                                             <td>{{ $tutor->lastname }}</td>
                                             <td>{{ $tutor->phone }}</td>
-                                            <td><img src="{{ asset($tutor->photo) }}" width="100" height="100" alt="Foto"></td>
                                             <td>
-                                                @if ($tutor->children)
+                                                @if ($tutor->photo)
+                                                    <img src="{{ asset($tutor->photo) }}" width="100" height="100" alt="Foto">
+                                                @else
+                                                    <span>No disponible</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($tutor->children->isNotEmpty())
                                                     @foreach ($tutor->children as $child)
-                                                        <p>{{ $child->name}} {{ $child->middlename }} {{ $child->lastname }}</p>
+                                                        <p>{{ $child->name }} {{ $child->middlename }} {{ $child->lastname }}</p>
                                                     @endforeach
+                                                @else
+                                                    <span>No hay infantes</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -66,11 +73,15 @@
                                                     <a class="btn btn-sm btn-warning" href="{{ route('family.edit', $tutor->id) }}"><i class="bi bi-pen"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Estás seguro de borrar?')"><i class="bi bi-trash"></i></button>
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de borrar?')"><i class="bi bi-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">No hay tutores registrados</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

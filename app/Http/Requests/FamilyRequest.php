@@ -34,15 +34,16 @@ class FamilyRequest extends FormRequest
 
         // Reglas de validación para el niño (children)
         $childrenRules = [
-            'name' => 'required|string|max:255',
-            'middlename' => 'nullable|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Asegura que sea una imagen y no exceda 2MB
-            'gender' => 'required|string|max:10',
-            'height' => 'required|integer',
-            'weight' => 'required|integer',
-            'description' => 'nullable|string',
+            'children' => 'required|array',
+            'children.*.name' => 'required|string|max:255',
+            'children.*.middlename' => 'nullable|string|max:255',
+            'children.*.lastname' => 'required|string|max:255',
+            'children.*.birthdate' => 'required|date',
+            'children.*.photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Asegura que sea una imagen y no exceda 2MB
+            'children.*.gender' => 'required|string|max:10',
+            'children.*.height' => 'required|integer',
+            'children.*.weight' => 'required|integer',
+            'children.*.description' => 'nullable|string',
         ];
 
         // Combinar y devolver ambas reglas de validación
