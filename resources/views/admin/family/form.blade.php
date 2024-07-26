@@ -63,9 +63,9 @@
                     <h4>Infante</h4>
 
                     <div class="form-group">
-                        <label for="name">{{ __('Nombre') }}</label>
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
-                        @error('name')
+                        <label for="children_name">{{ __('Nombre') }}</label>
+                        <input id="children_name" type="text" class="form-control @error('children_name') is-invalid @enderror" name="children_name" value="{{ old('children_name') }}" required>
+                        @error('children_name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
